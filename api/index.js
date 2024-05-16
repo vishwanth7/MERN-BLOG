@@ -24,3 +24,14 @@ app.use('/api/user',userRoutes);
 
 //signup api
 app.use('/api/auth',authRoutes)
+
+//middleware for error handling
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode||500
+    const errMessage=err.message || 'internal server error'
+    res.status(statusCode).json({
+        sucess:false,
+        messsage:errMessage,
+        statuscode:statusCode
+    })
+})
