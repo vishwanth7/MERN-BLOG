@@ -47,7 +47,7 @@ function Signup() {
           <Link to="/" className='text-4xl font-bold mt-5 dark:text-white'>
               <span className='px-2 py-0.5 text-white bg-gradient-to-r from-purple-600 to-blue-500 rounded-lg'>Vishwanth's</span>Blog
           </Link>
-          <p className='text-sm mt-5 font-semibold'>Hi User! Register here to use this website. Happy Blogging:)</p>
+          <p className='text-sm mt-5 font-semibold'>Hi User! Register here to start your journey. Happy Blogging:)</p>
         </div>
         {/* right part */}
         <div className='flex-1'>
