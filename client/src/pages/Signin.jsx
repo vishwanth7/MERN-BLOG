@@ -1,24 +1,30 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label,Spinner,TextInput } from 'flowbite-react'
+import {useDispatch,useSelector} from 'react-redux'
+import { signInStart,signInFailure,signInSuccess } from '../redux/user/userSlice'
+
 function Signin() {
   const navigate=useNavigate()
+  const dispatch=useDispatch()
+  //form data use state hook
   const[formData,setFormData]=useState({})
+  //using useselector 
+  const{loading,error:errorMessage}=useSelector(state=>state.user)
   const handlechange=(e)=>{
     setFormData({...formData,[e.target.id]:e.target.value.trim()})
   }
-  const[errorMessage,setErrorMessage]=useState(null)
-  const[loading,setLoading]=useState(null)
-  //console.log(formData)
+  // we are using redux to change the states so its not requierd 
+  // const[errorMessage,setErrorMessage]=useState(null)
+  // const[loading,setLoading]=useState(null)
+  
   const handleSubmit=async(e)=>{
-    
     e.preventDefault()
     if(!formData.email||!formData.password){
-      return setErrorMessage("Please fill all the fields!")
+      return dispatch(signInFailure("Please fill all the fields!"))
     }
     try{
-      setErrorMessage(null)
-      setLoading(true)
+      dispatch(signInStart())
       const res=await fetch('http://localhost:3000/api/auth/signin',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -27,17 +33,18 @@ function Signin() {
       const data=await res.json()
       if(data.success===false)
         {
-          return setErrorMessage(data.message)
+          // return 
+          dispatch(signInFailure(data.message))
         }
-      console.log(res)
-      setLoading(false)
+      // console.log(res)
+      //not required setLoading(false)
       if(data.success!==false){
+        dispatch(signInSuccess(data))
         navigate('/')
       }
     }
     catch(e){
-        setErrorMessage(e.message)
-        setLoading(false)
+        dispatch(signInFailure(e.message))
     }
   }
   
