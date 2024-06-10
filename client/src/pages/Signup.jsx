@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label,Spinner,TextInput } from 'flowbite-react'
+import GAuth from '../components/GAuth'
 function Signup() {
   const navigate=useNavigate()
   const[formData,setFormData]=useState({})
@@ -70,6 +71,7 @@ function Signup() {
               <Button gradientDuoTone='purpleToBlue' type='submit' disabled={loading}>
                 {loading ? (<><Spinner className='sm'/><span className='pl-3'>Loading...</span></>):'Sign up'}
               </Button>
+              <GAuth/>
             </form>
             <div className='flex gap-2 text-sm font-semibold mt-2'> 
               <span>Have an account already?</span>

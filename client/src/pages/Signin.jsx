@@ -3,7 +3,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label,Spinner,TextInput } from 'flowbite-react'
 import {useDispatch,useSelector} from 'react-redux'
 import { signInStart,signInFailure,signInSuccess } from '../redux/user/userSlice'
-
+import GAuth from '../components/GAuth'
 function Signin() {
   const navigate=useNavigate()
   const dispatch=useDispatch()
@@ -75,6 +75,7 @@ function Signin() {
               <Button gradientDuoTone='purpleToBlue' type='submit' disabled={loading}>
                 {loading ? (<><Spinner className='sm'/><span className='pl-3'>Loading...</span></>):'Sign-In'}
               </Button>
+              <GAuth/>
             </form>
             <div className='flex gap-2 text-sm font-semibold mt-2'> 
               <span>Don't Have an account?</span>
