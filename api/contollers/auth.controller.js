@@ -34,13 +34,12 @@ export const signin=async(req,res,next)=>{
     try{
         const validUser= await User.findOne({email})
         if(!validUser){
-           return next(errorHandler(404,'Invalid username/password'))
+            return next(errorHandler(404,'Invalid username'))
         }
-        const validPassword=bcryptjs.compareSync(password,validUser.password)
+        const validPassword= bcryptjs.compareSync(password,validUser.password)
         if(!validPassword){
-            return next(errorHandler(400,'Invalid username/passoword'))
+           return next(errorHandler(400,'Invalid passoword'))
         }
-        
         //if both are correct we need to authenticate the user using jsonwebtoken
         const token=jwt.sign(
             {id:validUser._id},process.env.JWT_SECRET//secret key 
@@ -58,7 +57,7 @@ export const signin=async(req,res,next)=>{
 
 export const google=async(req,res,next)=>{
    
-    const{email,name,photoUrl}=req.body
+    const{email,name,photourl}=req.body
     try{
          //if user exists or not
         const user =  await User.findOne({email})
@@ -77,7 +76,7 @@ export const google=async(req,res,next)=>{
                 username: name.toLowerCase().split(" ").join('')+Math.random().toString(9).slice(-4),
                 email,
                 password:newHashedPwd,
-                profilePicture:photoUrl
+                profilePicture:photourl
             })
             //save the user
             await newUser.save()

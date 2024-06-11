@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { Alert, Button, Label,Spinner,TextInput } from 'flowbite-react'
 import {useDispatch,useSelector} from 'react-redux'
-import { signInStart,signInFailure,signInSuccess } from '../redux/user/userSlice'
+import { signInStart,signInFailure,signInSuccess,clearErrorMessage } from '../redux/user/userSlice'
 import GAuth from '../components/GAuth'
+
 function Signin() {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   //form data use state hook
   const[formData,setFormData]=useState({})
-  //using useselector 
+  //using useselector  to get the error and remove the error once page is refreshed
   const{loading,error:errorMessage}=useSelector(state=>state.user)
+  useEffect(()=>{
+    dispatch(clearErrorMessage())
+  },[dispatch])
   const handlechange=(e)=>{
     setFormData({...formData,[e.target.id]:e.target.value.trim()})
   }
