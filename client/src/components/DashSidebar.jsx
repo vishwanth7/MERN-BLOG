@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 function DashSidebar() {
     const location=useLocation()
   const [Tab,setTab]=useState('')
+  
   useEffect(()=>{
       const urlParams=new URLSearchParams(location.search)
       const tabFromUrl=urlParams.get('tab')
@@ -18,7 +19,7 @@ function DashSidebar() {
         <Sidebar.Items>
             <Sidebar.ItemGroup>
                 <Link to='/dashboard?tab=profile'>
-                <Sidebar.Item active={Tab==='profile'} icon={HiUser} label={'User'} labelColor='dark'>
+                <Sidebar.Item active={Tab==='profile'} icon={HiUser} label={'User'} labelColor='dark' as='div'>
                     Profile
                 </Sidebar.Item>
                 </Link>
