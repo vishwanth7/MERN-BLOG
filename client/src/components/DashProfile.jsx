@@ -1,4 +1,5 @@
-import { Alert, Button, Modal, ModalHeader, TextInput } from 'flowbite-react'
+import { Alert, Button, Modal, ModalHeader, TextInput} from 'flowbite-react'
+import {Link} from 'react-router-dom'
 import React, { useEffect, useRef,useState } from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
@@ -10,7 +11,7 @@ import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 function DashProfile() {
 
-    const {currentUser} =useSelector((state)=>state.user)
+    const {currentUser,loading,error:errorMessage} =useSelector((state)=>state.user)
     const[imageFile,setImageFile] =useState(null)
     const[imageFileUrl,setImageurl]=useState(null)
     const[imageFileUploadingProgress,setimageFileUploadingProgress]=useState(null)
@@ -36,7 +37,6 @@ function DashProfile() {
             uploadImage()
         }
     },[imageFile])
-    const{loading,error:errorMessage}=useSelector(state=>state.user)
   useEffect(()=>{
     dispatch(clearErrorMessage())
   },[dispatch])
@@ -181,9 +181,19 @@ function DashProfile() {
             <TextInput type='text' id='username' placeholder='username' defaultValue={currentUser.username}onChange={handleChange}/>
             <TextInput type='text' id='email' placeholder='email' defaultValue={currentUser.email}onChange={handleChange}/>
             <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/>
-            <Button type='submit' gradientDuoTone="greenToBlue" outline>
-                Update
+            <Button type='submit' gradientDuoTone="greenToBlue" outline disabled={loading || imageFileUploading}>
+                {loading ?"Loading...":"Update"}
             </Button>
+            {
+                currentUser.isAdmin &&(
+                    <Link to={'/create-post'}>
+                    <Button type='button'  className='w-full'> 
+                            Create a Post 
+                    </Button>
+                    </Link>
+                    
+                )
+            }
         </form>
         <div className='mt-5 flex flex-row justify-between' >
             <Button onClick={()=>{setShowModal(true)}} color='failure' pill outline>

@@ -35,11 +35,12 @@ function Signin() {
         body:JSON.stringify(formData)
       })
       const data=await res.json()
-      //  const token1=data.token
-      //  console.log(token1)
-       //console.log(data.rest.token)
+      
+      console.log()
+      
       //setting token in local storage
       localStorage.setItem("access_token",data.token)
+
       
       if(data.success===false)
         {
