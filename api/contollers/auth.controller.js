@@ -44,9 +44,6 @@ export const signin=async(req,res,next)=>{
         const token=jwt.sign(
             {id:validUser._id},process.env.JWT_SECRET//secret key 
         )
-        //console.log(token)
-        // localStorage.setItem("access_token",token)
-        //separate password from the user
         const{ password : pass,...rest}=validUser._doc
         rest.token = token;
         res.status(200).json(rest)   
@@ -63,11 +60,12 @@ export const google=async(req,res,next)=>{
          //if user exists or not
         const user =  await User.findOne({email})
         if(user){
-            const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
+            const token=jwt.sign(
+                {id:user._id},process.env.JWT_SECRET
+            )
             const {password,...rest}=user._doc
-            res.status(200).cookie('access_token',token,{
-                httpOnly:true,
-            }).json(rest)
+            rest.token=token
+            res.status(200).json(rest)
         }
         else{
             //if user doesnt exist we have to create user with a random password,later user can change it
@@ -83,9 +81,8 @@ export const google=async(req,res,next)=>{
             await newUser.save()
             const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET)
             const {password,...rest}=newUser._doc
-            res.status(200).cookie('access_token',token,{
-                httpOnly:true
-            }).json(rest)
+            rest.token=token
+            res.status(200).json(rest)
         }
     }
     catch(error){

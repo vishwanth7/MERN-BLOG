@@ -5,12 +5,24 @@ import {AiOutlineSearch} from 'react-icons/ai';
 import {FaMoon,FaSun} from 'react-icons/fa';
 import { useSelector,useDispatch } from 'react-redux';
 import { toggleTheme } from '../redux/theme/themeSlice';
+import { signOutSuccess } from '../redux/user/userSlice';
 function Header() {
     const dispatch=useDispatch()
     const path=useLocation().pathname
     const {currentUser}=useSelector((state)=>state.user)
     const {theme}=useSelector((state)=>state.theme)
     // console.log(currentUser)
+    //sign out functionality
+    const handleSignOut= async ()=>{
+        try{
+            localStorage.removeItem("access_token");
+            dispatch(signOutSuccess())
+        }
+        catch(e)
+        {
+            console.log(e.message)
+        }
+    }
   return (
     <Navbar className='border-b-2'>
     { /*logo name part */ }
@@ -46,11 +58,11 @@ function Header() {
                     <Dropdown.Item>Profile</Dropdown.Item>
                 </Link>
                 <Dropdown.Divider/>
-                <Dropdown.Item>Sign out</Dropdown.Item>
+                <Dropdown.Item onClick={handleSignOut}>Sign out</Dropdown.Item>
             </Dropdown>
         ):
         ( <Link to='/signin'>
-            <Button gradientDuoTone="purpleToBlue" outline>Sign In</Button>
+            <Button gradientDuoTone="purpleToBlue" outline>Sign In </Button>
         </Link>)}
        
         

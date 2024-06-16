@@ -30,6 +30,7 @@ function GAuth() {
                 }),
                 })
             const data=await res.json()
+            localStorage.setItem("access_token",data.token)
             if(res.ok){
                 dispatch(signInSuccess(data))
                 navigate('/')

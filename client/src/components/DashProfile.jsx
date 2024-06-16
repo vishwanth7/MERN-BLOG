@@ -5,7 +5,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import {app} from '../firebase/'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSucccess,deleteUserFailure,clearErrorMessage} from '../redux/user/userSlice'
+import {updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSucccess,deleteUserFailure,clearErrorMessage,signOutSuccess} from '../redux/user/userSlice'
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
 function DashProfile() {
@@ -138,6 +138,16 @@ function DashProfile() {
         }
 
     }
+    const handleSignOut= async ()=>{
+        try{
+            localStorage.removeItem("access_token");
+            dispatch(signOutSuccess())
+        }
+        catch(e)
+        {
+            console.log(e.message)
+        }
+    }
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
         <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
@@ -179,7 +189,7 @@ function DashProfile() {
             <Button onClick={()=>{setShowModal(true)}} color='failure' pill outline>
                 Delete Account
             </Button>
-            <Button gradientMonochrome="failure" pill >
+            <Button onClick={handleSignOut}gradientMonochrome="failure" pill >
                 Sign Out
             </Button>
         </div>
