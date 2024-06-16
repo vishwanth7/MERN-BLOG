@@ -44,12 +44,13 @@ export const signin=async(req,res,next)=>{
         const token=jwt.sign(
             {id:validUser._id},process.env.JWT_SECRET//secret key 
         )
+        //console.log(token)
+        // localStorage.setItem("access_token",token)
         //separate password from the user
         const{ password : pass,...rest}=validUser._doc
-        res.status(200).cookie('access_token',token,{
-            httpOnly:true
-        }).json(rest)
-    }
+        rest.token = token;
+        res.status(200).json(rest)   
+    }   
     catch(error){
         next(error)
     }
