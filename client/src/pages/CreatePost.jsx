@@ -55,7 +55,7 @@ function CreatePost() {
         e.preventDefault()
         try{
             formData['token']=localStorage.getItem('access_token')
-            console.log(formData,"form data")
+            // console.log(formData,"form data")
             const res= await fetch('http://localhost:3000/api/post/create-post',{
                 method:'POST',
                 headers:{
@@ -81,12 +81,12 @@ function CreatePost() {
     <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <div className='flex flex-col gap-4 sm:flex-row justify-between'>
             <TextInput type='text' placeholder='Title' required id='title'
-            className='flex-1' onChange={(e)=>{
+            className='flex-1' onChange={(e)=>
                 setFormData({...formData,title:e.target.value})
-            }}/>
-            <Select onChange={(e)=>{
+            }/>
+            <Select onChange={(e)=>
                 setFormData({...formData,category:e.target.value})
-            }}>
+            }>
                 <option value="Uncategorized"> Select a Category</option>
                 <option value="javascript">Java Script</option>
                 <option value="reactjs">React.JS</option>
