@@ -7,4 +7,5 @@ router.post('/create-post',verifyToken,createPost)
 router.get('/get-post',getPost)
 router.delete('/delete-post/:postId/:userId',verifyToken,deletePost)
 router.put('/update-post/:postId/:userId',verifyToken,updatePost)
+
 export default router
