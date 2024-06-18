@@ -77,7 +77,7 @@ function DashPosts() {
      scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
         {currentUser.isAdmin && (userPosts.length > 0) ? (
             <>
-            <Table hoverable className='shadow-md'>
+            <Table hoverable className='shadow-md' >
                 <TableHead>
                     <TableHeadCell>Date Updated</TableHeadCell>
                     <TableHeadCell>Post Image</TableHeadCell>
@@ -89,7 +89,7 @@ function DashPosts() {
                     </TableHeadCell>
                 </TableHead>
                 {userPosts.map((post)=>(
-                    <TableBody className='divide-y'>
+                    <TableBody className='divide-y' key={post._id}>
                         <TableRow className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                             <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
                             <TableCell>
