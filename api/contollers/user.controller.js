@@ -70,9 +70,9 @@ export const getUsers=async(req,res,next)=>{
         return next(errorHandler(403,"You are not allowed to see all the users"))
     }
     try{
-        const startIndex=parseInt(req.query.startIndex)||0
-        const limit=parseInt(req.query.limit) ||9
-        const sortDirection=req.query.sort==='asc'?1:-1
+        const startIndex = parseInt(req.query.startIndex) || 0
+        const limit = parseInt(req.query.limit) || 9
+        const sortDirection= req.query.sort ==='asc'?1:-1
         const users= await User.find().sort({createdAt:sortDirection}).skip(startIndex).limit(limit)
         const usersWithoutPass=users.map((user)=>{
             const{password, ...rest}=user._doc

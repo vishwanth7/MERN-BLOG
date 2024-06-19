@@ -10,7 +10,7 @@ import { useNavigate,useParams } from 'react-router-dom';
 import {useSelector} from 'react-redux'
 
 function UpdatePosts() {
-    const{currentUser}=useSelector((state) =>state.user)
+    const{currentUser}=useSelector((state) => state.user)
     const navigate=useNavigate()
     const[file, setFile]=useState(null)
     const[imageUploadProgress,setImageUploadProgress]=useState(null)
@@ -21,7 +21,7 @@ function UpdatePosts() {
     // console.log(postId)
     useEffect(()=>{
         try{
-            const fetchPost= async() => {
+            const fetchPost= async() => {   
                 const res= await fetch(`http://localhost:3000/api/post/get-post?postId=${postId}`) 
                 const data= await res.json()
                 if(!res.ok){
@@ -81,7 +81,7 @@ function UpdatePosts() {
         try{
             formData['token']=localStorage.getItem('access_token')
             // console.log(formData,"form data")
-            const res= await fetch(`http://localhost:3000/api/post/update-post/${formData._id}/${currentUser._id}`,{
+            const res= await fetch(`http://localhost:3000/api/post/update-post/${postId}/${currentUser._id}`,{
                 method:'PUT',
                 headers:{
                     'Content-Type':'application/json'
@@ -91,6 +91,7 @@ function UpdatePosts() {
             const data=await res.json()
             if(!res.ok){
                 setPublishError(data.message)
+                return
             }
             if(res.ok){
                 setPublishError(null)
@@ -109,10 +110,12 @@ function UpdatePosts() {
             className='flex-1' onChange={(e)=>
                 setFormData({...formData,title:e.target.value})
             }
-            value={formData.title}/>
+            value={formData.title}
+            />
             <Select onChange={(e)=>
                 setFormData({...formData,category:e.target.value})
-            } value={formData.category}>
+            } value={formData.category}
+             >
                 <option value="Uncategorized"> Select a Category</option>
                 <option value="javascript">Java Script</option>
                 <option value="reactjs">React.JS</option>
@@ -139,7 +142,7 @@ function UpdatePosts() {
                 setFormData({...formData,content:value})
             }}
         />
-        <Button type='submit' gradientDuoTone='purpleToPink'>Update</Button>
+        <Button type='submit' gradientDuoTone='purpleToPink'>Update Post</Button>
         {
             publishError && <Alert color='failure' className='mt-5'>{publishError}</Alert>
         }
